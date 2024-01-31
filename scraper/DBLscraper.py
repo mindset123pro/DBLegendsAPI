@@ -85,7 +85,8 @@ class Scraper:
         rarity= Rarity[self.fetch_data(html, "div.rarity", "single")].value
 
         tags= list(map(self.remove_tabs_spaces, [nodes.text() for nodes in self.fetch_data(html, "span.ability.medium a", "multiple")]))
-
+        image_url = LexborHTMLParser(html).css_first("img.cutin.trs0.form0").attributes.get("src", "")
+        
         main_ability_name= self.fetch_data(html, "div.frm.form0 span.ability.medium", "single")
         main_ability_effect= self.fetch_data(html, "div.frm.form0 div.ability_text.small", "single")
 
@@ -160,7 +161,9 @@ class Scraper:
 
         zabilities= ZAbilities(ZAbility(*z1), ZAbility(*z2), ZAbility(*z3), ZAbility(*z4))
 
-        character= Character(name, id, color, rarity, tags, main_ability, unique_abilities, ultra_ability, base_stats, max_stats, strike_info, shot_info, image_url, special_move, special_skill, ultimate_skill, zabilities, is_lf, False, has_zenkai)
+        character = Character(name, id, color, rarity, tags, main_ability, unique_abilities, ultra_ability,
+                              base_stats, max_stats, strike_info, shot_info, image_url, special_move,
+                              special_skill, ultimate_skill, zabilities, is_lf, False, has_zenkai)
 
         return character
     
